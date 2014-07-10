@@ -807,7 +807,7 @@ var Room = {
 			if(row.length == 0 && num > 0) {
 				row = $('<div>').attr('id', id).addClass('storeRow');
 				$('<div>').addClass('row_key').text(_(k)).appendTo(row);
-				$('<div>').addClass('row_delta').text('(+10)').appendTo(row);
+				$('<div>').addClass('row_delta').text('').appendTo(row);
 				$('<div>').addClass('row_val').text(Math.floor(num)).appendTo(row);
 				
 				$('<div>').addClass('clear').appendTo(row);
