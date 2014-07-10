@@ -193,6 +193,10 @@ div.button:hover {
 	text-decoration: underline;
 }
 
+div.button.affordable {
+	border-color: green;
+}
+
 div.button.disabled, div.button.disabled:hover {
 	cursor: default;
 	border-color: grey;

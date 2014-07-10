@@ -38,13 +38,32 @@ var Button = {
 		if(options.cost) {
 			var ttPos = options.ttPos ? options.ttPos : "bottom right";
 			var costTooltip = $('<div>').addClass('tooltip ' + ttPos);
+			var affordable = true;
 			for(var k in options.cost) {
+				var have = $SM.get("stores." + _(k));
+				var need = options.cost[k];
 				$("<div>").addClass('row_key').text(_(k)).appendTo(costTooltip);
-				$("<div>").addClass('row_val').text(options.cost[k]).appendTo(costTooltip);
+				$("<div>").addClass('row_val').text(need).appendTo(costTooltip);
+				if (have < need) affordable = false;
 			}
+			el.toggleClass('affordable', affordable);
 			if(costTooltip.children().length > 0) {
 				costTooltip.appendTo(el);
 			}
+			// Subscribe to stateUpdateEvent
+			$.Dispatch('stateUpdate').subscribe(function (e) {
+				if (e.category != 'stores') return;
+				var affordable = true;
+				for (var k in options.cost) {
+					var need = options.cost[k];
+					var have = $SM.get("stores." + _(k));
+					if (need > have) {
+						affordable = false;
+						break;
+					}
+				}
+				el.toggleClass('affordable', affordable);
+			});
 		}
 		
 		if(options.width) {
