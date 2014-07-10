@@ -807,7 +807,9 @@ var Room = {
 			if(row.length == 0 && num > 0) {
 				row = $('<div>').attr('id', id).addClass('storeRow');
 				$('<div>').addClass('row_key').text(_(k)).appendTo(row);
+				$('<div>').addClass('row_delta').text('(+10)').appendTo(row);
 				$('<div>').addClass('row_val').text(Math.floor(num)).appendTo(row);
+				
 				$('<div>').addClass('clear').appendTo(row);
 				var curPrev = null;
 				location.children().each(function(i) {
@@ -855,6 +857,7 @@ var Room = {
 			$('div.tooltip', el).remove();
 			var tt = $('<div>').addClass('tooltip bottom right');
 			var storeName = el.attr('id').substring(4).replace('-', ' ');
+			var income_delta = 0;
 			for(var incomeSource in $SM.get('income')) {
 				var income = $SM.get('income["'+incomeSource+'"]');
 				for(var store in income.stores) {
@@ -864,9 +867,19 @@ var Room = {
 							.addClass('row_val')
 							.text(Engine.getIncomeMsg(income.stores[store], income.delay))
 							.appendTo(tt);
+						income_delta += income.stores[store];
 					}
 				}
 			}
+			var pos_delta = income_delta > 0;
+			var delta_view = $('div.row_delta', el)
+			if (income_delta == 0) {
+				delta_view.text("");
+			} else {
+				delta_view.text("(" + (pos_delta ? '+' : '') + income_delta + ")");
+				delta_view.toggleClass("positive", pos_delta);
+			}
+
 			if(tt.children().length > 0) {
 				tt.appendTo(el);
 			}
