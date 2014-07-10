@@ -18,6 +18,17 @@ var Button = {
 					$(this).data("handler")($(this));
 				}
 			})
+			.data("auto_reload", false)
+			.dblclick(function() {
+				var auto = !$(this).data("auto_reload");
+				$(this).data("auto_reload", auto);
+				if (auto) {
+					$('div.cooldown', $(this)).addClass('auto');
+				}
+				else {
+					$('div.cooldown', $(this)).removeClass('auto');
+				}
+			})
 			.data("handler",  typeof options.click == 'function' ? options.click : function() { Engine.log("click"); })
 			.data("remaining", 0)
 			.data("cooldown", typeof options.cooldown == 'number' ? options.cooldown : 0);
@@ -69,6 +80,9 @@ var Button = {
 				b.data('onCooldown', false);
 				if(!b.data('disabled')) {
 					b.removeClass('disabled');
+				}
+				if (b.data('auto_reload')) {
+					b.click();
 				}
 			});
 			btn.addClass('disabled');
