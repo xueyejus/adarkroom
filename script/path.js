@@ -258,7 +258,7 @@ var Path = {
 		return row;
 	},
 	
-  increaseSupply: function(btn) {
+	increaseSupply: function(btn) {
 		var supply = $(this).closest('.outfitRow').attr('key');
 		Engine.log('increasing ' + supply + ' by up to ' + btn.data);
 		var cur = Path.outfit[supply];
