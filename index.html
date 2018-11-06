@@ -32,6 +32,7 @@
 	
 	<script>
 		// try to read "lang" param's from url
+		var lang = 'cn'
 		var lang = decodeURIComponent((new RegExp('[?|&]lang=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 		// if no language requested, try to read it from local storage
 		if(!lang){
